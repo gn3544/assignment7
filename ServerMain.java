@@ -19,7 +19,11 @@ public class ServerMain extends Observable {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * setUpNetworking() establishes connection from the server side
+	 * @throws Exception
+	 */
 	private void setUpNetworking() throws Exception {
 		@SuppressWarnings("resource")
 		ServerSocket serverSock = new ServerSocket(4242);
@@ -44,7 +48,10 @@ public class ServerMain extends Observable {
 				e.printStackTrace();
 			}
 		}
-
+		
+		/**
+		 * run() notifies observers of messages being transferred from client to server
+		 */
 		public void run() {
 			String message, filtered;
 			try {
@@ -53,17 +60,17 @@ public class ServerMain extends Observable {
 					
 					ServerProtocol sp = new ServerProtocol(message, availableClients);
 					
-					if (message.charAt(0) == '?'){
+					if (message.charAt(0) == '?'){ //a new client joined
 						availableClients.put(sp.getSenderClientName(), true);
 					}
 					
 					filtered = sp.formatOutgoing();
 					if (filtered != null){
 						setChanged(); //here edit for chatboxes and stuff
-						notifyObservers(filtered);
+						notifyObservers(filtered); //will send messages to all clients, upto the client to accept it
 					}
 					
-					if (message.charAt(0) == '*'){
+					if (message.charAt(0) == '*'){ //a client has left
 						availableClients.remove(sp.getSenderClientName());
 					}
 				}

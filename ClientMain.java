@@ -18,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class ClientMain extends Application {
+	
 	private GridPane clientGrid;
 	private Stage clientStage;
 	private Scene clientScene;
@@ -43,6 +44,10 @@ public class ClientMain extends Application {
 		launch(args);
 	}
 	
+	/**
+	 * setLogin() creates a window to allow user to set name/ID
+	 * @throws Exception
+	 */
 	public void setLogin() throws Exception{
 		GridPane loginGrid = new GridPane();
 		Stage loginStage = new Stage();
@@ -81,6 +86,9 @@ public class ClientMain extends Application {
 		
 	}
 	
+	/**
+	 * initView() creates the interface for the user to interface with the server
+	 */
 	public void initView() {
 		this.clientGrid = new GridPane();
 		this.clientStage = new Stage();
@@ -146,7 +154,11 @@ public class ClientMain extends Application {
 			sending.requestFocus();
 		});
 	}
-
+	
+	/**
+	 * setUpNetworking() establishes connections from the client side
+	 * @throws Exception
+	 */
 	private void setUpNetworking() throws Exception {
 		@SuppressWarnings("resource")
 		Socket sock = new Socket("127.0.0.1", 4242);
@@ -158,9 +170,11 @@ public class ClientMain extends Application {
 		readerThread.start();
 	}
 
-
 	class IncomingReader implements Runnable {
 		
+		/**
+		 * run() interfaces messages from server to client
+		 */
 		public void run() { //interface availableClients and incoming
 			String message, filtered;
 			try {

@@ -14,6 +14,10 @@ public class ServerProtocol {
 		this.availability = availability;
 	}
 	
+	/**
+	 * getSenderClientName() gets name of the client who sent the message
+	 * @return String that denotes the name of the client
+	 */
 	public String getSenderClientName(){
 		
 		if ((message.charAt(0) == '*') || (message.charAt(0) == '?')){
@@ -24,6 +28,10 @@ public class ServerProtocol {
 		}
 	}
 	
+	/**
+	 * formatOutgoing() gets a formats message in case of an error
+	 * @return String that denotes the formatted message
+	 */
 	public String formatOutgoing(){
 		
 		String filtered;
@@ -49,6 +57,10 @@ public class ServerProtocol {
 		return message;
 	}
 	
+	/**
+	 * getNormalSender() returns the name of the client during a "normal" use case
+	 * @return String that denotes the name of the client
+	 */
 	private String getNormalSender(){
 		
 		String filtered, sender;
