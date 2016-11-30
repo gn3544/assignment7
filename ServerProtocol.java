@@ -16,16 +16,49 @@ public class ServerProtocol {
 	
 	public String getSenderClientName(){
 		
-		return null;
+		if ((message.charAt(0) == '*') || (message.charAt(0) == '?')){
+			return message.substring(1).split("-")[0];
+		}
+		else{
+			return getNormalSender();
+		}
 	}
 	
 	public String formatOutgoing(){
 		
-		return null;
+		String filtered;
+		
+		if ((message.charAt(0) == '*') || (message.charAt(0) == '?')){
+			filtered = String.join("", Arrays.copyOfRange(message.substring(1).split("-"), 0, 1));
+		}
+		else{
+			filtered = String.join("", Arrays.copyOfRange(message.split("-"), 0, 1));
+		}
+		
+		ArrayList<String> names = new ArrayList<String>(Arrays.asList(filtered.split(",")));
+		for (int i = 0; i < names.size(); i++){
+			names.set(i, names.get(i).trim());
+		}
+		
+		for (int i = 0; i < names.size(); i++){
+			if (!availability.containsKey(names.get(i))){
+				return "#" + getNormalSender() + "-" + "incorrect response.";
+			}
+		}
+		
+		return message;
 	}
 	
 	private String getNormalSender(){
 		
-		return null;
+		String filtered, sender;
+		filtered = String.join("", Arrays.copyOfRange(message.split("-"), 0, 1));
+		ArrayList<String> names = new ArrayList<String>(Arrays.asList(filtered.split(",")));
+		for (int i = 0; i < names.size(); i++){
+			names.set(i, names.get(i).trim());
+		}
+		
+		sender = names.get(0);
+		return sender;
 	}
 }
